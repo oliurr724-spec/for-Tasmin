@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Alisha ❤️</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh; overflow:hidden; font-family:Georgia,serif;
+  background:radial-gradient(circle at top,#35134f,#160b27 55%,#090510);
+  color:#fff; display:flex;align-items:center;justify-content:center;
+}
+canvas{position:fixed;inset:0;pointer-events:none}
+.container{position:relative;z-index:2;width:min(92%,620px);text-align:center}
+.badge{font:600 12px Arial,sans-serif;letter-spacing:4px;text-transform:uppercase;opacity:.7;margin-bottom:18px}
+h1{font-size:clamp(48px,12vw,86px);font-weight:400;line-height:.95}
+h1 span{color:#ff8fbd}
+.subtitle{margin:22px auto 30px;max-width:450px;font:16px/1.7 Arial,sans-serif;color:#ddd}
+button{
+  border:0;border-radius:999px;padding:15px 28px;cursor:pointer;
+  background:#ff6fae;color:white;font-weight:bold;font-size:15px;
+  box-shadow:0 10px 35px #ff4f9a55; transition:.25s;
+}
+button:hover{transform:translateY(-3px);box-shadow:0 15px 45px #ff4f9a77}
+.card{
+  display:none;margin-top:25px;padding:30px 28px;border-radius:25px;
+  background:#ffffff0d;border:1px solid #ffffff20;backdrop-filter:blur(14px);
+  box-shadow:0 20px 80px #0008;text-align:left;
+}
+.card.show{display:block;animation:pop .6s ease}
+.card h2{text-align:center;font-size:28px;font-weight:400;margin-bottom:18px}
+.card p{font:16px/1.8 Arial,sans-serif;color:#eee}
+.signature{text-align:right;margin-top:20px;font-size:22px;color:#ff9fc5}
+.heart{position:fixed;font-size:18px;animation:float 7s linear infinite;opacity:0}
+@keyframes float{0%{transform:translateY(105vh) scale(.6);opacity:0}15%{opacity:.7}100%{transform:translateY(-10vh) scale(1.3);opacity:0}}
+@keyframes pop{from{opacity:0;transform:scale(.92) translateY(15px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<div class="container">
+  <div class="badge">A little something from Oli</div>
+  <h1>For <span>Alisha</span> ♡</h1>
+  <div class="subtitle">
+    I could have just sent you a text...<br>
+    but you deserve something a little more special.
+  </div>
+  <button onclick="openLetter()">Open your surprise 💌</button>
+
+  <div class="card" id="letter">
+    <h2>Dear Alisha,</h2>
+    <p>
+      I don't always know how to put everything I feel into words,
+      so I made you a little corner of the internet instead.
+    </p>
+    <p style="margin-top:14px">
+      Out of all the people in this world, somehow I got lucky enough
+      to have <b>you</b>. And honestly, that's something I never want
+      to take for granted.
+    </p>
+    <p style="margin-top:14px">
+      Thank you for being you. For the little moments, the laughs,
+      the conversations, and all the memories that make ordinary days
+      feel different.
+    </p>
+    <p style="margin-top:14px">
+      This website is just code, but the reason I made it is real.
+      ❤️
+    </p>
+    <div class="signature">— Oli</div>
+  </div>
+</div>
+
+<script>
+const canvas=document.getElementById("stars"),ctx=canvas.getContext("2d");
+let stars=[];
+function resize(){
+ canvas.width=innerWidth; canvas.height=innerHeight;
+ stars=Array.from({length:100},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,
+ r:Math.random()*1.7+.3,a:Math.random(),s:Math.random()*.35+.1}));
+}
+function draw(){
+ ctx.clearRect(0,0,innerWidth,innerHeight);
+ stars.forEach(s=>{
+   s.y-=s.s;if(s.y<0)s.y=innerHeight;
+   ctx.globalAlpha=.25+s.a*.5;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle="#fff";ctx.fill();
+ });
+ requestAnimationFrame(draw);
+}
+addEventListener("resize",resize);resize();draw();
+
+function hearts(){
+ const h=document.createElement("div");h.className="heart";h.textContent=["♥","♡","✦"][Math.floor(Math.random()*3)];
+ h.style.left=Math.random()*100+"vw";h.style.animationDuration=(5+Math.random()*5)+"s";
+ h.style.fontSize=(12+Math.random()*20)+"px";document.body.appendChild(h);
+ setTimeout(()=>h.remove(),10000);
+}
+setInterval(hearts,650);
+
+function openLetter(){
+ document.getElementById("letter").classList.add("show");
+ document.querySelector("button").textContent="You found it ❤️";
+ for(let i=0;i<18;i++) setTimeout(hearts,i*60);
+}
+</script>
+</body>
+</html>
